@@ -7577,7 +7577,7 @@ def _lucas_ads_db():
 
 
 def _lucas_repair_ads():
-    c = lucas_form_db()
+    c = _lucas_ads_db()
     c.execute("""
         CREATE TABLE IF NOT EXISTS ads (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -7589,10 +7589,7 @@ def _lucas_repair_ads():
         )
     """)
     c.commit()
-    c.close()
 
-
-    c=_lucas_ads_db()
 
     cols=[
         r["name"]
