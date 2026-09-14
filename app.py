@@ -7577,6 +7577,20 @@ def _lucas_ads_db():
 
 
 def _lucas_repair_ads():
+    c = lucas_form_db()
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS ads (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            seller_id INTEGER,
+            title TEXT,
+            price INTEGER DEFAULT 0,
+            description TEXT,
+            listing_code TEXT
+        )
+    """)
+    c.commit()
+    c.close()
+
 
     c=_lucas_ads_db()
 
