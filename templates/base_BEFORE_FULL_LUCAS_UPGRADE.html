@@ -1,0 +1,3095 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>{% block title %}{{ site_name }}{% endblock %}</title>
+
+<meta name="description" content="{{ site_name }} — {{ announcement }}">
+<meta name="theme-color" content="#07070a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+
+:root{
+    --bg:#07070a;
+    --bg2:#0b0b10;
+    --card:#101015;
+    --card2:#15151c;
+    --line:rgba(255,255,255,.08);
+    --line2:rgba(255,255,255,.14);
+    --text:#f7f7fa;
+    --muted:#858590;
+    --muted2:#5f5f68;
+    --white:#fff;
+    --accent:#8b5cf6;
+    --accent2:#6366f1;
+    --green:#39e58c;
+    --red:#ff5d73;
+    --yellow:#f5c451;
+    --radius:24px;
+    --shadow:0 25px 80px rgba(0,0,0,.35);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+    background:var(--bg);
+}
+
+body{
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(99,102,241,.10),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 35%,
+            rgba(139,92,246,.07),
+            transparent 28%
+        ),
+        var(--bg);
+
+    color:var(--text);
+    font-family:Vazirmatn,Arial,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body.locked{
+    overflow:hidden;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+img{
+    max-width:100%;
+}
+
+::selection{
+    background:#fff;
+    color:#000;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#07070a;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#24242c;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#383844;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.bg-noise{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9998;
+    opacity:.025;
+
+    background-image:url(
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"
+    );
+}
+
+.bg-grid{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-3;
+    opacity:.18;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:70px 70px;
+
+    mask-image:linear-gradient(
+        to bottom,
+        black,
+        transparent 85%
+    );
+}
+
+.bg-orb{
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:-2;
+    filter:blur(90px);
+    opacity:.13;
+    background:#6d4aff;
+    top:-180px;
+    right:-180px;
+}
+
+.bg-orb.two{
+    width:400px;
+    height:400px;
+    top:55%;
+    right:auto;
+    left:-180px;
+    background:#315cff;
+}
+
+/* =========================================================
+   TOP ANNOUNCEMENT
+========================================================= */
+
+.announcement{
+    min-height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    padding:8px 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(99,102,241,.12),
+            rgba(139,92,246,.06),
+            rgba(99,102,241,.12)
+        );
+
+    border-bottom:1px solid var(--line);
+
+    color:#a9a9b4;
+    font-size:11px;
+    text-align:center;
+}
+
+.announcement strong{
+    color:#fff;
+}
+
+.announcement-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 14px var(--green);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header{
+    position:sticky;
+    top:0;
+    z-index:900;
+
+    height:82px;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 5vw;
+
+    background:rgba(7,7,10,.74);
+    border-bottom:1px solid transparent;
+
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    transition:
+        background .3s,
+        border-color .3s,
+        box-shadow .3s;
+}
+
+.site-header.scrolled{
+    background:rgba(7,7,10,.92);
+    border-color:var(--line);
+    box-shadow:0 12px 40px rgba(0,0,0,.2);
+}
+
+.header-inner{
+    width:100%;
+    max-width:1500px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:30px;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:max-content;
+}
+
+.brand-mark{
+    width:42px;
+    height:42px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #aaa
+        );
+
+    color:#08080b;
+
+    font-size:17px;
+    font-weight:900;
+
+    box-shadow:
+        0 10px 35px rgba(255,255,255,.09);
+
+    transform:rotate(-5deg);
+    transition:.4s;
+}
+
+.brand:hover .brand-mark{
+    transform:rotate(0) scale(1.08);
+}
+
+.brand-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1.15;
+}
+
+.brand-name{
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.brand-sub{
+    color:#666671;
+    font-size:8px;
+    letter-spacing:2px;
+    margin-top:3px;
+}
+
+/* =========================================================
+   DESKTOP NAV
+========================================================= */
+
+.main-nav{
+    display:flex;
+    justify-content:center;
+    gap:7px;
+}
+
+.main-nav a{
+    position:relative;
+
+    color:#85858f;
+    font-size:12px;
+    font-weight:500;
+
+    padding:11px 15px;
+    border-radius:12px;
+
+    transition:.3s;
+}
+
+.main-nav a:hover{
+    color:#fff;
+    background:rgba(255,255,255,.045);
+}
+
+.main-nav a.active{
+    color:#fff;
+}
+
+.main-nav a.active:after{
+    content:"";
+
+    position:absolute;
+    bottom:3px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:4px;
+    height:4px;
+
+    border-radius:50%;
+    background:#fff;
+
+    box-shadow:0 0 10px rgba(255,255,255,.8);
+}
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--line);
+    border-radius:13px;
+
+    background:rgba(255,255,255,.025);
+    color:#bdbdc6;
+
+    transition:.3s;
+}
+
+.icon-btn:hover{
+    color:#fff;
+    background:rgba(255,255,255,.07);
+    border-color:var(--line2);
+    transform:translateY(-2px);
+}
+
+.icon{
+    width:18px;
+    height:18px;
+    display:block;
+}
+
+.user-mini{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    border:1px solid var(--line);
+    border-radius:14px;
+
+    padding:5px 9px 5px 6px;
+
+    background:rgba(255,255,255,.025);
+
+    transition:.3s;
+}
+
+.user-mini:hover{
+    border-color:var(--line2);
+    background:rgba(255,255,255,.05);
+}
+
+.user-avatar{
+    width:31px;
+    height:31px;
+
+    border-radius:10px;
+
+    display:grid;
+    place-items:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #24242d,
+            #111117
+        );
+
+    font-size:12px;
+    font-weight:800;
+}
+
+.user-name{
+    max-width:90px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+
+    color:#ddd;
+    font-size:10px;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-wrap{
+    position:relative;
+    width:min(430px,100%);
+    margin:auto;
+}
+
+.search-box{
+    width:100%;
+    height:46px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:0 15px;
+
+    border:1px solid var(--line);
+    border-radius:15px;
+
+    background:rgba(255,255,255,.025);
+
+    transition:.3s;
+}
+
+.search-box:focus-within{
+    border-color:rgba(139,92,246,.55);
+    background:rgba(255,255,255,.045);
+    box-shadow:
+        0 0 0 4px rgba(139,92,246,.07),
+        0 15px 45px rgba(0,0,0,.2);
+}
+
+.search-box svg{
+    width:17px;
+    color:#666672;
+    flex:none;
+}
+
+.search-input{
+    flex:1;
+    width:100%;
+
+    border:0;
+    outline:0;
+
+    background:transparent;
+    color:#fff;
+
+    font-size:11px;
+}
+
+.search-input::placeholder{
+    color:#5f5f69;
+}
+
+.search-shortcut{
+    display:flex;
+    align-items:center;
+    gap:3px;
+
+    color:#555560;
+    font-size:9px;
+}
+
+.search-shortcut kbd{
+    border:1px solid #28282f;
+    background:#111116;
+    padding:3px 6px;
+    border-radius:6px;
+}
+
+/* SEARCH RESULTS */
+
+.search-results{
+    position:absolute;
+    top:57px;
+    left:0;
+    right:0;
+
+    display:none;
+
+    overflow:hidden;
+
+    border:1px solid var(--line2);
+    border-radius:20px;
+
+    background:
+        rgba(15,15,21,.97);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.5);
+
+    backdrop-filter:blur(30px);
+
+    z-index:1000;
+}
+
+.search-results.open{
+    display:block;
+    animation:searchOpen .2s ease;
+}
+
+@keyframes searchOpen{
+    from{
+        opacity:0;
+        transform:translateY(-8px) scale(.98);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.search-result{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:11px 13px;
+
+    border-bottom:1px solid rgba(255,255,255,.045);
+
+    transition:.25s;
+}
+
+.search-result:last-child{
+    border-bottom:0;
+}
+
+.search-result:hover{
+    background:rgba(255,255,255,.055);
+}
+
+.search-result-image{
+    width:44px;
+    height:44px;
+
+    border-radius:11px;
+
+    overflow:hidden;
+
+    background:#181820;
+
+    flex:none;
+}
+
+.search-result-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.search-result-info{
+    flex:1;
+    min-width:0;
+}
+
+.search-result-title{
+    font-size:11px;
+    font-weight:700;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.search-result-category{
+    color:#666672;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.search-result-price{
+    font-size:11px;
+    font-weight:800;
+}
+
+/* =========================================================
+   MOBILE HEADER
+========================================================= */
+
+.mobile-menu-btn{
+    display:none;
+}
+
+/* =========================================================
+   SIDE DRAWER
+========================================================= */
+
+.drawer-overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(5px);
+
+    z-index:1900;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.35s;
+}
+
+.drawer-overlay.open{
+    opacity:1;
+    visibility:visible;
+}
+
+.drawer{
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+
+    width:min(390px,88vw);
+
+    background:
+        linear-gradient(
+            180deg,
+            #111117,
+            #08080c
+        );
+
+    border-left:1px solid var(--line2);
+
+    z-index:2000;
+
+    transform:translateX(105%);
+    transition:
+        transform .45s
+        cubic-bezier(.2,.8,.2,1);
+
+    box-shadow:
+        -30px 0 100px rgba(0,0,0,.45);
+
+    overflow-y:auto;
+}
+
+.drawer.open{
+    transform:none;
+}
+
+.drawer-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:24px 22px;
+
+    border-bottom:1px solid var(--line);
+}
+
+.drawer-title{
+    font-size:15px;
+    font-weight:800;
+}
+
+.drawer-close{
+    width:38px;
+    height:38px;
+
+    border:1px solid var(--line);
+    border-radius:12px;
+
+    background:#111118;
+    color:#aaa;
+}
+
+.drawer-section{
+    padding:20px 15px;
+}
+
+.drawer-label{
+    color:#555560;
+    font-size:9px;
+    letter-spacing:2px;
+    margin:0 8px 9px;
+}
+
+.drawer-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:13px 12px;
+
+    border-radius:13px;
+
+    color:#9999a4;
+    font-size:12px;
+
+    transition:.25s;
+}
+
+.drawer-link:hover,
+.drawer-link.active{
+    background:rgba(255,255,255,.055);
+    color:#fff;
+}
+
+.drawer-icon{
+    width:34px;
+    height:34px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--line);
+    border-radius:10px;
+
+    background:rgba(255,255,255,.025);
+}
+
+.drawer-user{
+    margin:20px 15px;
+
+    padding:16px;
+
+    border:1px solid var(--line);
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        );
+}
+
+.drawer-user-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.drawer-user-avatar{
+    width:48px;
+    height:48px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:15px;
+
+    background:linear-gradient(
+        135deg,
+        #282832,
+        #101016
+    );
+
+    font-weight:900;
+}
+
+.drawer-user-info strong{
+    display:block;
+    font-size:12px;
+}
+
+.drawer-user-info span{
+    color:#666672;
+    font-size:9px;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main{
+    position:relative;
+    min-height:70vh;
+}
+
+.container{
+    width:min(1500px,90%);
+    margin:auto;
+}
+
+.page{
+    padding:70px 0 120px;
+}
+
+/* =========================================================
+   PAGE HERO
+========================================================= */
+
+.page-hero{
+    position:relative;
+    padding:90px 0 65px;
+    overflow:hidden;
+}
+
+.page-hero:before{
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    top:-300px;
+    right:10%;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(124,92,255,.16),
+            transparent 70%
+        );
+
+    pointer-events:none;
+}
+
+.page-kicker{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    color:#777782;
+
+    font-size:10px;
+
+    margin-bottom:20px;
+}
+
+.page-kicker span{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+    box-shadow:0 0 15px var(--accent);
+}
+
+.page-title{
+    font-size:clamp(42px,6vw,88px);
+    line-height:1;
+    letter-spacing:-3px;
+    font-weight:900;
+}
+
+.page-title .dim{
+    color:#555560;
+}
+
+.page-description{
+    max-width:620px;
+    margin-top:25px;
+
+    color:#777782;
+    font-size:13px;
+    line-height:2;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    min-height:44px;
+
+    padding:0 18px;
+
+    border:1px solid transparent;
+    border-radius:13px;
+
+    font-size:11px;
+    font-weight:700;
+
+    transition:
+        transform .25s,
+        background .25s,
+        border-color .25s,
+        box-shadow .25s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-primary{
+    background:#fff;
+    color:#08080b;
+
+    box-shadow:
+        0 12px 35px rgba(255,255,255,.08);
+}
+
+.btn-primary:hover{
+    box-shadow:
+        0 18px 50px rgba(255,255,255,.14);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,.045);
+    border-color:var(--line);
+    color:#fff;
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,.08);
+    border-color:var(--line2);
+}
+
+.btn-purple{
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #6366f1
+        );
+
+    color:#fff;
+
+    box-shadow:
+        0 15px 45px rgba(99,102,241,.2);
+}
+
+.btn-danger{
+    background:rgba(255,93,115,.08);
+    border-color:rgba(255,93,115,.15);
+    color:#ff8798;
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.glass-card{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.15);
+
+    backdrop-filter:blur(18px);
+}
+
+.glass-card.hoverable{
+    transition:
+        transform .45s
+        cubic-bezier(.2,.8,.2,1),
+        border-color .35s,
+        background .35s;
+}
+
+.glass-card.hoverable:hover{
+    transform:translateY(-6px);
+    border-color:var(--line2);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.018)
+        );
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+    padding:90px 0;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:25px;
+
+    margin-bottom:35px;
+}
+
+.section-label{
+    color:#5f5f6a;
+    font-size:9px;
+    letter-spacing:2px;
+    margin-bottom:10px;
+}
+
+.section-title{
+    font-size:clamp(28px,4vw,52px);
+    line-height:1.05;
+    letter-spacing:-2px;
+}
+
+.section-more{
+    color:#85858f;
+    font-size:10px;
+
+    display:flex;
+    align-items:center;
+    gap:6px;
+
+    transition:.25s;
+}
+
+.section-more:hover{
+    color:#fff;
+}
+
+/* =========================================================
+   PRODUCT GRID
+========================================================= */
+
+.product-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:16px;
+}
+
+.product-card{
+    position:relative;
+    overflow:hidden;
+
+    border:1px solid var(--line);
+    border-radius:22px;
+
+    background:#0e0e13;
+
+    transition:
+        transform .4s
+        cubic-bezier(.2,.8,.2,1),
+        border-color .3s,
+        box-shadow .3s;
+}
+
+.product-card:hover{
+    transform:translateY(-7px);
+    border-color:var(--line2);
+    box-shadow:
+        0 25px 65px rgba(0,0,0,.35);
+}
+
+.product-image{
+    position:relative;
+
+    aspect-ratio:1 / 1;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #292934,
+            #101016 65%
+        );
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform .65s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+.product-card:hover .product-image img{
+    transform:scale(1.07);
+}
+
+.product-image-placeholder{
+    width:100%;
+    height:100%;
+
+    display:grid;
+    place-items:center;
+
+    color:#454550;
+
+    font-size:40px;
+    font-weight:900;
+}
+
+.product-badge{
+    position:absolute;
+    top:12px;
+    right:12px;
+
+    padding:6px 9px;
+
+    border-radius:9px;
+
+    background:rgba(7,7,10,.8);
+    border:1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(10px);
+
+    font-size:8px;
+    font-weight:800;
+}
+
+.product-fav{
+    position:absolute;
+    top:10px;
+    left:10px;
+
+    width:34px;
+    height:34px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:10px;
+
+    background:rgba(7,7,10,.7);
+
+    color:#aaa;
+
+    backdrop-filter:blur(10px);
+
+    transition:.25s;
+}
+
+.product-fav:hover{
+    color:#ff6680;
+    transform:scale(1.08);
+}
+
+.product-body{
+    padding:17px;
+}
+
+.product-category{
+    color:#656570;
+    font-size:8px;
+    margin-bottom:7px;
+}
+
+.product-title{
+    font-size:12px;
+    font-weight:700;
+
+    line-height:1.7;
+
+    min-height:40px;
+}
+
+.product-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+
+    gap:10px;
+
+    margin-top:17px;
+}
+
+.product-price{
+    font-size:15px;
+    font-weight:900;
+}
+
+.product-price small{
+    color:#666671;
+    font-size:8px;
+    font-weight:500;
+}
+
+.old-price{
+    display:block;
+
+    color:#4f4f58;
+
+    text-decoration:line-through;
+
+    font-size:9px;
+    margin-bottom:2px;
+}
+
+.product-rating{
+    color:#777782;
+    font-size:9px;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    padding:70px 20px;
+
+    text-align:center;
+
+    border:1px dashed rgba(255,255,255,.1);
+    border-radius:24px;
+
+    color:#666671;
+}
+
+.empty-icon{
+    width:70px;
+    height:70px;
+
+    display:grid;
+    place-items:center;
+
+    margin:0 auto 18px;
+
+    border:1px solid var(--line);
+    border-radius:22px;
+
+    background:rgba(255,255,255,.025);
+
+    font-size:25px;
+}
+
+.empty strong{
+    display:block;
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.empty span{
+    font-size:10px;
+}
+
+/* =========================================================
+   FORMS
+========================================================= */
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-label{
+    display:block;
+
+    color:#8c8c97;
+
+    font-size:10px;
+    font-weight:600;
+
+    margin-bottom:8px;
+}
+
+.input,
+.select,
+.textarea{
+    width:100%;
+
+    border:1px solid var(--line);
+    outline:none;
+
+    border-radius:13px;
+
+    background:#0e0e13;
+    color:#fff;
+
+    padding:0 14px;
+
+    transition:.25s;
+}
+
+.input,
+.select{
+    height:48px;
+}
+
+.textarea{
+    min-height:130px;
+    padding-top:13px;
+    resize:vertical;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus{
+    border-color:rgba(139,92,246,.5);
+    box-shadow:
+        0 0 0 4px rgba(139,92,246,.07);
+}
+
+.input::placeholder,
+.textarea::placeholder{
+    color:#50505b;
+}
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.alert{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+
+    padding:13px 15px;
+
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+
+    font-size:10px;
+    line-height:1.8;
+
+    margin-bottom:18px;
+}
+
+.alert.error{
+    background:rgba(255,93,115,.06);
+    border-color:rgba(255,93,115,.15);
+    color:#ff9aa8;
+}
+
+.alert.success{
+    background:rgba(57,229,140,.06);
+    border-color:rgba(57,229,140,.15);
+    color:#7df0b4;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.site-footer{
+    border-top:1px solid var(--line);
+
+    padding:70px 0 30px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.012),
+            transparent
+        );
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(3,1fr);
+    gap:50px;
+}
+
+.footer-brand-text{
+    max-width:330px;
+
+    color:#656570;
+
+    font-size:10px;
+    line-height:2;
+
+    margin-top:15px;
+}
+
+.footer-title{
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.footer-links{
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+}
+
+.footer-links a{
+    color:#666671;
+    font-size:9px;
+    transition:.25s;
+}
+
+.footer-links a:hover{
+    color:#fff;
+    transform:translateX(-3px);
+}
+
+.footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-top:60px;
+    padding-top:22px;
+
+    border-top:1px solid var(--line);
+
+    color:#4f4f58;
+    font-size:8px;
+}
+
+.footer-status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.status-dot{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+    background:var(--green);
+
+    box-shadow:0 0 12px var(--green);
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast-container{
+    position:fixed;
+
+    left:25px;
+    bottom:25px;
+
+    z-index:99999;
+
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+
+    pointer-events:none;
+}
+
+.toast{
+    min-width:250px;
+    max-width:350px;
+
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    padding:13px 15px;
+
+    border:1px solid var(--line2);
+    border-radius:15px;
+
+    background:
+        rgba(17,17,23,.94);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.4);
+
+    backdrop-filter:blur(20px);
+
+    color:#ddd;
+    font-size:10px;
+
+    transform:translateY(20px);
+    opacity:0;
+
+    animation:
+        toastIn .35s forwards;
+}
+
+@keyframes toastIn{
+    to{
+        transform:none;
+        opacity:1;
+    }
+}
+
+.toast.hide{
+    animation:toastOut .3s forwards;
+}
+
+@keyframes toastOut{
+    to{
+        transform:translateY(15px);
+        opacity:0;
+    }
+}
+
+.toast-icon{
+    width:28px;
+    height:28px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:9px;
+
+    background:rgba(255,255,255,.06);
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+    position:fixed;
+    inset:0;
+
+    z-index:100000;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#07070a;
+
+    transition:
+        opacity .5s,
+        visibility .5s;
+}
+
+.loading.done{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.loader{
+    width:45px;
+    height:45px;
+
+    border:2px solid rgba(255,255,255,.08);
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:loaderSpin .8s linear infinite;
+}
+
+@keyframes loaderSpin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(25px);
+
+    transition:
+        opacity .7s ease,
+        transform .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:none;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+    .product-grid{
+        grid-template-columns:
+            repeat(3,minmax(0,1fr));
+    }
+
+    .footer-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .main-nav{
+        gap:0;
+    }
+
+    .main-nav a{
+        padding:10px;
+    }
+}
+
+@media(max-width:850px){
+
+    .site-header{
+        height:70px;
+    }
+
+    .header-inner{
+        display:flex;
+        justify-content:space-between;
+    }
+
+    .main-nav{
+        display:none;
+    }
+
+    .search-wrap{
+        display:none;
+    }
+
+    .header-actions{
+        margin-right:auto;
+    }
+
+    .mobile-menu-btn{
+        display:grid;
+        place-items:center;
+    }
+
+    .brand-sub{
+        display:none;
+    }
+
+    .brand-mark{
+        width:38px;
+        height:38px;
+    }
+
+    .user-mini{
+        padding:4px;
+    }
+
+    .user-name{
+        display:none;
+    }
+
+    .page{
+        padding:45px 0 80px;
+    }
+
+    .page-hero{
+        padding:65px 0 45px;
+    }
+
+    .section{
+        padding:65px 0;
+    }
+
+    .container{
+        width:92%;
+    }
+
+    .product-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+        gap:10px;
+    }
+
+    .product-card{
+        border-radius:18px;
+    }
+
+    .product-body{
+        padding:13px;
+    }
+
+    .product-title{
+        font-size:10px;
+    }
+
+    .product-price{
+        font-size:13px;
+    }
+
+    .section-head{
+        margin-bottom:22px;
+    }
+
+    .footer-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+        gap:35px 20px;
+    }
+
+    .footer-grid > div:first-child{
+        grid-column:1/-1;
+    }
+}
+
+@media(max-width:520px){
+
+    .announcement{
+        font-size:9px;
+        min-height:34px;
+    }
+
+    .brand-name{
+        font-size:14px;
+    }
+
+    .header-actions{
+        gap:5px;
+    }
+
+    .icon-btn{
+        width:38px;
+        height:38px;
+        border-radius:11px;
+    }
+
+    .mobile-menu-btn{
+        width:38px;
+        height:38px;
+    }
+
+    .page-title{
+        font-size:42px;
+        letter-spacing:-2px;
+    }
+
+    .page-description{
+        font-size:11px;
+    }
+
+    .section-title{
+        font-size:28px;
+    }
+
+    .product-image{
+        aspect-ratio:1 / 1.02;
+    }
+
+    .product-fav{
+        width:31px;
+        height:31px;
+        top:7px;
+        left:7px;
+    }
+
+    .product-badge{
+        top:8px;
+        right:8px;
+    }
+
+    .product-category{
+        font-size:7px;
+    }
+
+    .product-bottom{
+        margin-top:12px;
+    }
+
+    .product-rating{
+        font-size:8px;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        gap:12px;
+        text-align:center;
+    }
+
+    .toast-container{
+        left:12px;
+        right:12px;
+        bottom:12px;
+    }
+
+    .toast{
+        min-width:0;
+        width:100%;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+    }
+}
+
+</style>
+
+{% block head %}{% endblock %}
+
+</head>
+
+<body>
+
+<div class="loading" id="loading">
+    <div class="loader"></div>
+</div>
+
+<div class="bg-noise"></div>
+<div class="bg-grid"></div>
+<div class="bg-orb"></div>
+<div class="bg-orb two"></div>
+
+
+<!-- =======================================================
+     ANNOUNCEMENT
+======================================================== -->
+
+<div class="announcement">
+
+    <span class="announcement-dot"></span>
+
+    <span>
+        {{ announcement }}
+    </span>
+
+    <strong>
+        ✦
+    </strong>
+
+</div>
+
+
+<!-- =======================================================
+     HEADER
+======================================================== -->
+
+<header class="site-header" id="siteHeader">
+
+    <div class="header-inner">
+
+        <a href="{{ url_for('home') }}" class="brand">
+
+            <div class="brand-mark">
+                N
+            </div>
+
+            <div class="brand-text">
+
+                <div class="brand-name">
+                    {{ site_name }}
+                </div>
+
+                <div class="brand-sub">
+                    CLASH OF CLANS MARKET
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-wrap">
+
+            <form
+                action="{{ url_for('explore') }}"
+                method="get"
+                class="search-box"
+                id="searchForm"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8">
+
+                    <circle cx="11" cy="11" r="7"></circle>
+
+                    <path d="m20 20-4-4"></path>
+
+                </svg>
+
+                <input
+                    id="globalSearch"
+                    class="search-input"
+                    name="q"
+                    autocomplete="off"
+                    placeholder="جست‌وجو در LUCAS SHOP..."
+                >
+
+                <div class="search-shortcut">
+                    <kbd>⌘</kbd>
+                    <kbd>K</kbd>
+                </div>
+
+            </form>
+
+            <div
+                class="search-results"
+                id="searchResults"
+            ></div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="header-actions">
+
+            <button
+                class="icon-btn mobile-menu-btn"
+                id="openDrawer"
+                aria-label="منو"
+            >
+                <svg
+                    class="icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <path d="M4 7h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 17h16"></path>
+                </svg>
+            </button>
+
+
+            <a
+                href="{{ url_for('explore') }}"
+                class="icon-btn"
+                aria-label="جست‌وجو"
+            >
+                <svg
+                    class="icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m20 20-4-4"></path>
+                </svg>
+            </a>
+
+
+            {% if current_user %}
+
+                <a
+                    href="{{ url_for('lucas_account_dashboard') }}"
+                    class="user-mini"
+                >
+
+                    <div class="user-avatar">
+                        {{ (current_user['name'] or current_user['username'])[0]|upper }}
+                    </div>
+
+                    <div class="user-name">
+                        {{ current_user['name'] or current_user['username'] }}
+                    </div>
+
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('lucas_login') }}"
+                    class="icon-btn"
+                    aria-label="ورود"
+                >
+
+                    <svg
+                        class="icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <path d="M10 17l5-5-5-5"></path>
+                        <path d="M15 12H3"></path>
+                    </svg>
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     DRAWER
+======================================================== -->
+
+<div
+    class="drawer-overlay"
+    id="drawerOverlay"
+></div>
+
+
+<aside
+    class="drawer"
+    id="drawer"
+>
+
+    <div class="drawer-head">
+
+        <div class="drawer-title">
+            منوی اصلی
+        </div>
+
+        <button
+            class="drawer-close"
+            id="closeDrawer"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    {% if current_user %}
+
+    <div class="drawer-user">
+
+        <div class="drawer-user-top">
+
+            <div class="drawer-user-avatar">
+                {{ (current_user['name'] or current_user['username'])[0]|upper }}
+            </div>
+
+            <div class="drawer-user-info">
+
+                <strong>
+                    {{ current_user['name'] or current_user['username'] }}
+                </strong>
+
+                <span>
+                    حساب کاربری شما
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <div class="drawer-section">
+
+        <div class="drawer-label">
+            NAVIGATION
+        </div>
+
+        <a
+            href="{{ url_for('home') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">⌂</span>
+            صفحه اصلی
+        </a>
+
+        <a
+            href="{{ url_for('explore') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">⌕</span>
+            کشف محصولات
+        </a>
+
+        {% if current_user %}
+
+        <a
+            href="{{ url_for('lucas_account_dashboard') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">◉</span>
+            پروفایل من
+        </a>
+
+        <a
+            href="{{ url_for('lucas_logout') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">↪</span>
+            خروج از حساب
+        </a>
+
+        {% else %}
+
+        <a
+            href="{{ url_for('lucas_login') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">→</span>
+            ورود
+        </a>
+
+        <a
+            href="{{ url_for('lucas_register') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">+</span>
+            ساخت حساب
+        </a>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="drawer-section">
+
+        <div class="drawer-label">
+            EXPLORE
+        </div>
+
+        <a
+            href="{{ url_for('explore', sort='popular') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">↗</span>
+            محبوب‌ترین‌ها
+        </a>
+
+        <a
+            href="{{ url_for('explore', sort='newest') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">✦</span>
+            جدیدترین‌ها
+        </a>
+
+        <a
+            href="{{ url_for('explore', sort='cheap') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">↓</span>
+            قیمت مناسب
+        </a>
+
+        <a
+            href="{{ url_for('explore', sort='expensive') }}"
+            class="drawer-link"
+        >
+            <span class="drawer-icon">↑</span>
+            ویژه و لوکس
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =======================================================
+     MAIN
+======================================================== -->
+
+<main>
+
+{% block content %}{% endblock %}
+
+</main>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================== -->
+
+<footer class="site-footer">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div>
+
+                <a href="{{ url_for('home') }}" class="brand">
+
+                    <div class="brand-mark">
+                        N
+                    </div>
+
+                    <div class="brand-text">
+
+                        <div class="brand-name">
+                            {{ site_name }}
+                        </div>
+
+                        <div class="brand-sub">
+                            CLASH OF CLANS MARKET
+                        </div>
+
+                    </div>
+
+                </a>
+
+                <p class="footer-brand-text">
+                    یک تجربه دیجیتال متفاوت،
+                    سریع، مدرن و ساخته‌شده
+                    برای نسل جدید وب.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <div class="footer-title">
+                    کشف
+                </div>
+
+                <div class="footer-links">
+
+                    <a href="{{ url_for('home') }}">
+                        خانه
+                    </a>
+
+                    <a href="{{ url_for('explore') }}">
+                        همه محصولات
+                    </a>
+
+                    <a href="{{ url_for('explore', sort='popular') }}">
+                        محبوب‌ترین
+                    </a>
+
+                    <a href="{{ url_for('explore', sort='newest') }}">
+                        جدیدترین
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="footer-title">
+                    حساب
+                </div>
+
+                <div class="footer-links">
+
+                    {% if current_user %}
+
+                    <a href="{{ url_for('lucas_account_dashboard') }}">
+                        پروفایل
+                    </a>
+
+                    <a href="{{ url_for('lucas_logout') }}">
+                        خروج
+                    </a>
+
+                    {% else %}
+
+                    <a href="{{ url_for('lucas_login') }}">
+                        ورود
+                    </a>
+
+                    <a href="{{ url_for('lucas_register') }}">
+                        ثبت‌نام
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="footer-title">
+                    LUCAS SHOP
+                </div>
+
+                <div class="footer-links">
+
+                    <a href="{{ url_for('home') }}">
+                        درباره تجربه
+                    </a>
+
+                    <a href="{{ url_for('explore') }}">
+                        شروع کنید
+                    </a>
+
+                    <a href="/health">
+                        وضعیت سرویس
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <div>
+                © 2026 {{ site_name }} — تمامی حقوق محفوظ است.
+            </div>
+
+            <div class="footer-status">
+
+                <span class="status-dot"></span>
+
+                سیستم آنلاین است
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =======================================================
+     TOAST
+======================================================== -->
+
+<div
+    class="toast-container"
+    id="toastContainer"
+></div>
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================== -->
+
+<script>
+
+/* =========================================================
+   GLOBAL HELPERS
+========================================================= */
+
+const $ = (selector, root = document) =>
+    root.querySelector(selector);
+
+const $$ = (selector, root = document) =>
+    [...root.querySelectorAll(selector)];
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+window.addEventListener("load", () => {
+
+    const loader = $("#loading");
+
+    if(loader){
+
+        setTimeout(() => {
+            loader.classList.add("done");
+        }, 250);
+
+    }
+
+});
+
+
+/* =========================================================
+   HEADER SCROLL
+========================================================= */
+
+const header = $("#siteHeader");
+
+function updateHeader(){
+
+    if(!header) return;
+
+    if(window.scrollY > 20){
+
+        header.classList.add("scrolled");
+
+    }else{
+
+        header.classList.remove("scrolled");
+
+    }
+
+}
+
+window.addEventListener(
+    "scroll",
+    updateHeader,
+    {passive:true}
+);
+
+updateHeader();
+
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+const drawer = $("#drawer");
+const drawerOverlay = $("#drawerOverlay");
+const openDrawer = $("#openDrawer");
+const closeDrawer = $("#closeDrawer");
+
+function openSideMenu(){
+
+    if(!drawer) return;
+
+    drawer.classList.add("open");
+    drawerOverlay.classList.add("open");
+
+    document.body.classList.add("locked");
+
+}
+
+function closeSideMenu(){
+
+    if(!drawer) return;
+
+    drawer.classList.remove("open");
+    drawerOverlay.classList.remove("open");
+
+    document.body.classList.remove("locked");
+
+}
+
+if(openDrawer){
+    openDrawer.addEventListener(
+        "click",
+        openSideMenu
+    );
+}
+
+if(closeDrawer){
+    closeDrawer.addEventListener(
+        "click",
+        closeSideMenu
+    );
+}
+
+if(drawerOverlay){
+    drawerOverlay.addEventListener(
+        "click",
+        closeSideMenu
+    );
+}
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Escape"){
+            closeSideMenu();
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message, type="normal"){
+
+    const container = $("#toastContainer");
+
+    if(!container) return;
+
+    const item = document.createElement("div");
+
+    item.className = "toast";
+
+    let icon = "✦";
+
+    if(type === "success"){
+        icon = "✓";
+    }
+
+    if(type === "error"){
+        icon = "!";
+    }
+
+    item.innerHTML = `
+        <div class="toast-icon">
+            ${icon}
+        </div>
+        <div>${escapeHtml(message)}</div>
+    `;
+
+    container.appendChild(item);
+
+    setTimeout(() => {
+
+        item.classList.add("hide");
+
+        setTimeout(() => {
+            item.remove();
+        }, 350);
+
+    }, 3200);
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   LIVE SEARCH
+========================================================= */
+
+const searchInput = $("#globalSearch");
+const searchResults = $("#searchResults");
+
+let searchTimer = null;
+
+if(searchInput){
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            const q = searchInput.value.trim();
+
+            clearTimeout(searchTimer);
+
+            if(q.length < 2){
+
+                if(searchResults){
+                    searchResults.classList.remove("open");
+                    searchResults.innerHTML = "";
+                }
+
+                return;
+            }
+
+            searchTimer = setTimeout(
+                () => performSearch(q),
+                220
+            );
+
+        }
+    );
+
+}
+
+
+async function performSearch(q){
+
+    if(!searchResults) return;
+
+    searchResults.innerHTML = `
+        <div style="
+            padding:25px;
+            text-align:center;
+            color:#666;
+            font-size:10px;
+        ">
+            در حال جست‌وجو...
+        </div>
+    `;
+
+    searchResults.classList.add("open");
+
+    try{
+
+        const response = await fetch(
+            "/api/search?q=" +
+            encodeURIComponent(q)
+        );
+
+        const data = await response.json();
+
+        if(!data.length){
+
+            searchResults.innerHTML = `
+                <div style="
+                    padding:25px;
+                    text-align:center;
+                    color:#666;
+                    font-size:10px;
+                ">
+                    نتیجه‌ای پیدا نشد
+                </div>
+            `;
+
+            return;
+        }
+
+        searchResults.innerHTML =
+            data.map(item => `
+
+                <a
+                    class="search-result"
+                    href="/product/${item.id}"
+                >
+
+                    <div class="search-result-image">
+
+                        ${
+                            item.image
+
+                            ?
+
+                            `<img
+                                src="/uploads/${escapeHtml(item.image)}"
+                                alt=""
+                            >`
+
+                            :
+
+                            `<div style="
+                                width:100%;
+                                height:100%;
+                                display:grid;
+                                place-items:center;
+                                color:#555;
+                                font-size:18px;
+                            ">N</div>`
+                        }
+
+                    </div>
+
+                    <div class="search-result-info">
+
+                        <div class="search-result-title">
+                            ${escapeHtml(item.title)}
+                        </div>
+
+                        <div class="search-result-category">
+                            ${escapeHtml(item.category)}
+                        </div>
+
+                    </div>
+
+                    <div class="search-result-price">
+                        ${Number(item.price || 0).toLocaleString("fa-IR")}
+                    </div>
+
+                </a>
+
+            `).join("");
+
+    }catch(error){
+
+        searchResults.innerHTML = `
+            <div style="
+                padding:25px;
+                text-align:center;
+                color:#ff7f91;
+                font-size:10px;
+            ">
+                خطا در ارتباط با سرور
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   SEARCH KEYBOARD SHORTCUT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "k"
+        ){
+
+            event.preventDefault();
+
+            if(searchInput){
+
+                searchInput.focus();
+
+                searchInput.select();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE SEARCH
+========================================================= */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if(
+            searchResults &&
+            searchResults.classList.contains("open") &&
+            !event.target.closest(".search-wrap")
+        ){
+
+            searchResults.classList.remove("open");
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if(entry.isIntersecting){
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:.08
+        }
+    );
+
+$$(".reveal").forEach(
+    element => revealObserver.observe(element)
+);
+
+
+/* =========================================================
+   IMAGE ERROR HANDLING
+========================================================= */
+
+document.addEventListener(
+    "error",
+    event => {
+
+        const img = event.target;
+
+        if(
+            img &&
+            img.tagName === "IMG"
+        ){
+
+            img.style.display = "none";
+
+        }
+
+    },
+    true
+);
+
+
+/* =========================================================
+   PRODUCT FAVORITE
+========================================================= */
+
+async function toggleFavorite(productId, button){
+
+    if(!productId || !button) return;
+
+    button.disabled = true;
+
+    try{
+
+        const response = await fetch(
+            "/favorite/" + productId,
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if(data.login){
+
+            toast(
+                "برای افزودن به علاقه‌مندی ابتدا وارد شوید.",
+                "normal"
+            );
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "/login?next=" +
+                    encodeURIComponent(
+                        window.location.pathname
+                    );
+
+            },700);
+
+            return;
+        }
+
+        if(data.ok){
+
+            button.classList.toggle(
+                "active",
+                data.favorite
+            );
+
+            if(data.favorite){
+
+                button.innerHTML = "♥";
+
+                toast(
+                    "به علاقه‌مندی‌ها اضافه شد.",
+                    "success"
+                );
+
+            }else{
+
+                button.innerHTML = "♡";
+
+                toast(
+                    "از علاقه‌مندی‌ها حذف شد."
+                );
+
+            }
+
+        }
+
+    }catch(error){
+
+        toast(
+            "خطایی رخ داد.",
+            "error"
+        );
+
+    }finally{
+
+        button.disabled = false;
+
+    }
+
+}
+
+
+/* =========================================================
+   IMAGE LAZY LOADING
+========================================================= */
+
+$$("img").forEach(
+    img => {
+
+        if(!img.hasAttribute("loading")){
+            img.setAttribute(
+                "loading",
+                "lazy"
+            );
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PAGE TRANSITION
+========================================================= */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        const link =
+            event.target.closest("a");
+
+        if(!link) return;
+
+        const href =
+            link.getAttribute("href");
+
+        if(
+            !href ||
+            href.startsWith("#") ||
+            href.startsWith("http") ||
+            href.startsWith("javascript:") ||
+            link.target === "_blank"
+        ){
+            return;
+        }
+
+        if(
+            href.startsWith("/") &&
+            !event.ctrlKey &&
+            !event.metaKey
+        ){
+
+            const loader = $("#loading");
+
+            if(loader){
+
+                loader.classList.remove(
+                    "done"
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MOBILE SWIPE DRAWER
+========================================================= */
+
+let touchStartX = 0;
+
+document.addEventListener(
+    "touchstart",
+    event => {
+
+        touchStartX =
+            event.touches[0].clientX;
+
+    },
+    {passive:true}
+);
+
+document.addEventListener(
+    "touchend",
+    event => {
+
+        const touchEndX =
+            event.changedTouches[0].clientX;
+
+        const distance =
+            touchStartX - touchEndX;
+
+        if(
+            distance > 90 &&
+            window.innerWidth <= 850
+        ){
+
+            openSideMenu();
+
+        }
+
+        if(
+            distance < -90 &&
+            drawer &&
+            drawer.classList.contains("open")
+        ){
+
+            closeSideMenu();
+
+        }
+
+    },
+    {passive:true}
+);
+
+
+/* =========================================================
+   PREVENT DOUBLE TAP ZOOM
+========================================================= */
+
+let lastTouchEnd = 0;
+
+document.addEventListener(
+    "touchend",
+    event => {
+
+        const now = Date.now();
+
+        if(now - lastTouchEnd <= 300){
+            event.preventDefault();
+        }
+
+        lastTouchEnd = now;
+
+    },
+    {passive:false}
+);
+
+</script>
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>
