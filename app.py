@@ -6278,7 +6278,7 @@ button{
  name="images"
  multiple
  accept="image/png,image/jpeg,image/webp,image/gif"
- onchange="if(this.files.length>3){alert('حداکثر ۶ عکس');this.value='';}"
+ onchange="if(this.files.length>6){alert('حداکثر ۶ عکس');this.value='';}"
 >
 
 
