@@ -4790,7 +4790,7 @@ function showGems(show){
 
 function checkImageCount(input){
 
-    if(input.files.length>3){
+    if(input.files.length>6){
 
         alert("حداکثر ۶ عکس می‌توانید انتخاب کنید.");
 
