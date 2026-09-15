@@ -2366,7 +2366,6 @@ def delete_ad(ad_id):
 
 app.secret_key = "LUCAS_SHOP_SESSION_KEY_1598"
 
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {
     "png", "jpg", "jpeg", "webp", "gif", "svg"
