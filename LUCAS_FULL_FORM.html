@@ -1,0 +1,332 @@
+<form method="POST" enctype="multipart/form-data">
+
+<div class="section">
+
+<div class="section-title">📷 تصاویر اکانت</div>
+
+<div class="file-box">
+
+<input
+    type="file"
+    name="images"
+    accept="image/png,image/jpeg,image/webp,image/gif"
+    multiple
+    required
+    id="images"
+    onchange="checkImageCount(this)"
+>
+
+<small>
+حداقل ۱ و حداکثر ۶ عکس انتخاب کنید.
+</small>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">👤 اطلاعات اکانت</div>
+
+<label>نام اکانت</label>
+
+<input
+    type="text"
+    name="account_name"
+    placeholder="مثلاً LUCAS"
+    value="{{ request.form.get('account_name','') }}"
+    required
+>
+
+<label>Player Tag</label>
+
+<input
+    type="text"
+    name="player_tag"
+    placeholder="#XXXXXXXX"
+    value="{{ request.form.get('player_tag','') }}"
+>
+
+
+<label>وضعیت Supercell ID</label>
+
+<div class="buttons">
+
+<label class="choice">
+<input
+    type="radio"
+    name="supercell_status"
+    value="متصل"
+    {% if request.form.get('supercell_status') == 'متصل' %}checked{% endif %}
+>
+<span>🟢 متصل</span>
+</label>
+
+<label class="choice">
+<input
+    type="radio"
+    name="supercell_status"
+    value="متصل نیست"
+    {% if request.form.get('supercell_status') == 'متصل نیست' %}checked{% endif %}
+>
+<span>🔴 متصل نیست</span>
+</label>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">🏰 تاون هال</div>
+
+<div class="buttons">
+
+{% for n in range(1,19) %}
+
+<label class="choice">
+
+<input
+    type="radio"
+    name="town_hall"
+    value="{{ n }}"
+    {% if request.form.get('town_hall') == n|string %}checked{% endif %}
+    onchange="updateHeroes({{ n }})"
+>
+
+<span>TH {{ n }}</span>
+
+</label>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">🔨 بیلدر هال</div>
+
+<div class="buttons">
+
+{% for n in range(1,11) %}
+
+<label class="choice">
+
+<input
+    type="radio"
+    name="builder_hall"
+    value="{{ n }}"
+    {% if request.form.get('builder_hall') == n|string %}checked{% endif %}
+>
+
+<span>BH {{ n }}</span>
+
+</label>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">🦸 سطح هیروها</div>
+
+<div class="hint">
+با انتخاب TH، فقط لول‌های مجاز همان TH نمایش داده می‌شوند.
+</div>
+
+
+<div class="hero-box">
+
+<div class="hero-name">👑 Barbarian King</div>
+
+<div id="bk_buttons" class="hero-buttons"></div>
+
+<input
+    type="hidden"
+    name="barbarian_king"
+    id="bk_value"
+    value="{{ request.form.get('barbarian_king','0') }}"
+>
+
+</div>
+
+
+<div class="hero-box">
+
+<div class="hero-name">🏹 Archer Queen</div>
+
+<div id="aq_buttons" class="hero-buttons"></div>
+
+<input
+    type="hidden"
+    name="archer_queen"
+    id="aq_value"
+    value="{{ request.form.get('archer_queen','0') }}"
+>
+
+</div>
+
+
+<div class="hero-box">
+
+<div class="hero-name">🧙 Grand Warden</div>
+
+<div id="gw_buttons" class="hero-buttons"></div>
+
+<input
+    type="hidden"
+    name="grand_warden"
+    id="gw_value"
+    value="{{ request.form.get('grand_warden','0') }}"
+>
+
+</div>
+
+
+<div class="hero-box">
+
+<div class="hero-name">⚔️ Royal Champion</div>
+
+<div id="rc_buttons" class="hero-buttons"></div>
+
+<input
+    type="hidden"
+    name="royal_champion"
+    id="rc_value"
+    value="{{ request.form.get('royal_champion','0') }}"
+>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">✏️ تغییر نام</div>
+
+<div class="buttons">
+
+<label class="choice">
+
+<input
+    type="radio"
+    name="name_change"
+    value="رایگان"
+    onclick="showGems(false)"
+    {% if request.form.get('name_change') == 'رایگان' %}checked{% endif %}
+>
+
+<span>🆓 رایگان</span>
+
+</label>
+
+<label class="choice">
+
+<input
+    type="radio"
+    name="name_change"
+    value="با جم"
+    onclick="showGems(true)"
+    {% if request.form.get('name_change') == 'با جم' %}checked{% endif %}
+>
+
+<span>💎 با جم</span>
+
+</label>
+
+</div>
+
+
+<div
+    id="gemBox"
+    class="gem-box {% if request.form.get('name_change') != 'با جم' %}hidden{% endif %}"
+>
+
+<div class="hero-name">💎 مقدار جم تغییر نام</div>
+
+<div class="buttons">
+
+{% for g in ['500','1000','1500','2000','2500','3000','3500','3500 و بیشتر'] %}
+
+<label class="choice">
+
+<input
+    type="radio"
+    name="name_change_gems"
+    value="{{ g }}"
+    {% if request.form.get('name_change_gems') == g %}checked{% endif %}
+>
+
+<span>{{ g }}</span>
+
+</label>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">💰 قیمت اکانت</div>
+
+<input
+    type="number"
+    name="price"
+    id="price"
+    min="0"
+    placeholder="مثلاً 100000"
+    value="{{ request.form.get('price','') }}"
+    required
+>
+
+<div class="price-preview" id="pricePreview"></div>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">📱 آیدی تلگرام</div>
+
+<input
+    type="text"
+    name="telegram"
+    placeholder="@username"
+    value="{{ request.form.get('telegram','') }}"
+>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">📝 توضیحات آگهی</div>
+
+<textarea
+    name="description"
+    placeholder="توضیحات اکانت را بنویسید..."
+>{{ request.form.get('description','') }}</textarea>
+
+</div>
+
+
+<button class="submit" type="submit">
+🚀 ثبت آگهی
+</button>
+
+</form>

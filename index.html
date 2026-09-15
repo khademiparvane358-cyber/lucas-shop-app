@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>LUCAS SHOP | فروشگاه اکانت کلش</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+    font-family:Tahoma,Arial,sans-serif;
+    background:#070b14;
+    color:#fff;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.container{
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:0 18px;
+}
+
+/* Header */
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(7,11,20,.94);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid #182238;
+}
+
+.nav{
+    min-height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#36a3ff;
+}
+
+.telegram{
+    background:#168bd5;
+    padding:11px 17px;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+/* Hero */
+.hero{
+    padding:65px 0 45px;
+    text-align:center;
+}
+
+.badge{
+    display:inline-block;
+    background:#101c32;
+    border:1px solid #203556;
+    color:#55b5ff;
+    padding:8px 14px;
+    border-radius:30px;
+    font-size:12px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:clamp(34px,8vw,65px);
+    line-height:1.15;
+    font-weight:900;
+    margin-bottom:18px;
+}
+
+.hero h1 span{
+    color:#299dff;
+}
+
+.hero p{
+    color:#aeb9ca;
+    line-height:2;
+    font-size:15px;
+    max-width:650px;
+    margin:0 auto 28px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:14px 23px;
+    border-radius:14px;
+    font-weight:bold;
+    font-size:14px;
+    transition:.2s;
+}
+
+.btn-primary{
+    background:#168fe0;
+}
+
+.btn-secondary{
+    background:#121b2d;
+    border:1px solid #263653;
+}
+
+.btn:active{
+    transform:scale(.96);
+}
+
+/* Stats */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin:15px auto 55px;
+}
+
+.stat{
+    background:#0d1423;
+    border:1px solid #1b2941;
+    border-radius:17px;
+    padding:20px 10px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:23px;
+    color:#38a7ff;
+    margin-bottom:6px;
+}
+
+.stat small{
+    color:#8996aa;
+}
+
+/* Products */
+.section-title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.section-title h2{
+    font-size:27px;
+    margin-bottom:8px;
+}
+
+.section-title p{
+    color:#8290a5;
+    font-size:13px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card{
+    background:linear-gradient(145deg,#101929,#0b111e);
+    border:1px solid #1c2a42;
+    border-radius:20px;
+    padding:22px;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    border-color:#267fc0;
+}
+
+.icon{
+    width:52px;
+    height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:15px;
+    background:#102b45;
+    font-size:25px;
+    margin-bottom:17px;
+}
+
+.card h3{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#8794a8;
+    font-size:13px;
+    line-height:1.9;
+    min-height:50px;
+}
+
+.card a{
+    display:block;
+    text-align:center;
+    margin-top:18px;
+    padding:12px;
+    border-radius:12px;
+    background:#168bd5;
+    font-size:13px;
+    font-weight:bold;
+}
+
+/* Why */
+.why{
+    margin:65px 0;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.feature{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px;
+    background:#0d1422;
+    border:1px solid #1b2940;
+    border-radius:16px;
+}
+
+.feature-icon{
+    font-size:24px;
+}
+
+.feature h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.feature p{
+    color:#808da0;
+    font-size:12px;
+}
+
+/* Telegram box */
+.telegram-box{
+    margin:20px 0 60px;
+    padding:30px 20px;
+    border-radius:23px;
+    text-align:center;
+    background:linear-gradient(135deg,#0d263c,#101827);
+    border:1px solid #1d4565;
+}
+
+.telegram-box h2{
+    margin-bottom:10px;
+}
+
+.telegram-box p{
+    color:#96a5b9;
+    font-size:13px;
+    margin-bottom:20px;
+    line-height:1.9;
+}
+
+/* Footer */
+footer{
+    border-top:1px solid #172238;
+    padding:25px 0;
+    text-align:center;
+    color:#657388;
+    font-size:12px;
+}
+
+footer b{
+    color:#299dff;
+}
+
+/* Mobile */
+@media(max-width:700px){
+    .nav{
+        min-height:62px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .telegram{
+        padding:9px 12px;
+        font-size:11px;
+    }
+
+    .hero{
+        padding:48px 0 35px;
+    }
+
+    .hero p{
+        font-size:13px;
+    }
+
+    .stats{
+        margin-bottom:45px;
+    }
+
+    .stat{
+        padding:16px 5px;
+    }
+
+    .stat strong{
+        font-size:19px;
+    }
+
+    .stat small{
+        font-size:10px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav">
+        <div class="logo">LUCAS <span>SHOP</span></div>
+        <a class="telegram" href="https://t.me/LUCAS_SHOP_LS1" target="_blank">
+            💬 کانال تلگرام
+        </a>
+    </div>
+</header>
+
+<main>
+
+<section class="hero">
+    <div class="container">
+
+        <div class="badge">🔥 فروشگاه تخصصی اکانت کلش آف کلنز</div>
+
+        <h1>
+            به <span>LUCAS SHOP</span><br>
+            خوش اومدی
+        </h1>
+
+        <p>
+            خرید و فروش اکانت‌های کلش آف کلنز
+            با محیط ساده، سریع و مطمئن.
+            آگهی‌های جدید رو در کانال تلگرام ببین.
+        </p>
+
+        <div class="buttons">
+            <a class="btn btn-primary"
+               href="https://t.me/LUCAS_SHOP_LS1"
+               target="_blank">
+               🚀 ورود به کانال
+            </a>
+
+            <a class="btn btn-secondary"
+               href="#products">
+               🛒 مشاهده بخش‌ها
+            </a>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="container">
+    <div class="stats">
+
+        <div class="stat">
+            <strong>24/7</strong>
+            <small>فعالیت فروشگاه</small>
+        </div>
+
+        <div class="stat">
+            <strong>⚡ سریع</strong>
+            <small>ثبت و بررسی آگهی</small>
+        </div>
+
+        <div class="stat">
+            <strong>🎮 COC</strong>
+            <small>تخصصی کلش آف کلنز</small>
+        </div>
+
+    </div>
+</section>
+
+
+<section id="products" class="container">
+
+    <div class="section-title">
+        <h2>🛒 بخش‌های فروشگاه</h2>
+        <p>از بخش موردنظر خودت وارد شو</p>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">🏠</div>
+            <h3>اکانت‌های کلش</h3>
+            <p>
+                مشاهده اکانت‌های موجود و آگهی‌های فروش.
+            </p>
+            <a href="https://t.me/LUCAS_SHOP_LS1" target="_blank">
+                مشاهده آگهی‌ها
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="icon">📢</div>
+            <h3>ثبت آگهی</h3>
+            <p>
+                برای ثبت آگهی فروش اکانت از ربات ثبت آگهی استفاده کن.
+            </p>
+            <a href="https://t.me/LUCAS_SHOP_2_BOT" target="_blank">
+                ثبت آگهی
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="icon">👤</div>
+            <h3>پشتیبانی</h3>
+            <p>
+                برای ارتباط با مدیریت فروشگاه از آیدی رسمی استفاده کن.
+            </p>
+            <a href="https://t.me/LUCAS_SHOP_1" target="_blank">
+                ارتباط با ادمین
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="container why">
+
+    <div class="section-title">
+        <h2>⭐ چرا LUCAS SHOP؟</h2>
+        <p>ساده، سریع و مخصوص گیمرها</p>
+    </div>
+
+    <div class="features">
+
+        <div class="feature">
+            <div class="feature-icon">🔐</div>
+            <div>
+                <h3>ارتباط از طریق آیدی رسمی</h3>
+                <p>اطلاعات تماس رسمی فروشگاه را بررسی کن.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <div>
+                <h3>دسترسی سریع</h3>
+                <p>آگهی‌ها و بخش‌های مهم در دسترس تو هستند.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🎮</div>
+            <div>
+                <h3>تمرکز روی کلش آف کلنز</h3>
+                <p>فروشگاه برای بازیکنان Clash of Clans ساخته شده.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">📱</div>
+            <div>
+                <h3>مناسب موبایل</h3>
+                <p>صفحه برای استفاده راحت با گوشی طراحی شده.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="container">
+
+    <div class="telegram-box">
+
+        <h2>💙 LUCAS SHOP در تلگرام</h2>
+
+        <p>
+            برای دیدن آگهی‌های جدید و اطلاعیه‌های فروشگاه
+            وارد کانال رسمی LUCAS SHOP شو.
+        </p>
+
+        <a class="btn btn-primary"
+           href="https://t.me/LUCAS_SHOP_LS1"
+           target="_blank">
+           ورود به کانال تلگرام
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+    © 2026 <b>LUCAS SHOP</b> — تمامی حقوق محفوظ است.
+</footer>
+
+</body>
+</html>

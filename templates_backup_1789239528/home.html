@@ -1,0 +1,1818 @@
+{% extends "base.html" %}
+
+{% block title %}LUCAS SHOP — فروشگاه آنلاین{% endblock %}
+
+{% block head %}
+<style>
+/* =========================================================
+   LUCAS SHOP — PREMIUM STORE SYSTEM
+   هیچ بخش قبلی حذف نشده؛ این فایل لایه برندینگ و طراحی است
+   ========================================================= */
+
+:root{
+    --ls-bg:#03050a;
+    --ls-bg2:#070b12;
+    --ls-panel:#0a0f18;
+    --ls-panel2:#0d1420;
+    --ls-white:#f7f9ff;
+    --ls-muted:#8490a5;
+    --ls-line:rgba(255,255,255,.075);
+
+    --ls-blue:#287cff;
+    --ls-cyan:#00d9ff;
+    --ls-purple:#7657ff;
+    --ls-green:#32e58b;
+    --ls-red:#ff4d70;
+
+    --ls-radius:28px;
+    --ls-shadow:0 30px 100px rgba(0,0,0,.45);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(
+            circle at 8% 5%,
+            rgba(40,124,255,.13),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(118,87,255,.10),
+            transparent 30%
+        ),
+        var(--ls-bg);
+    color:var(--ls-white);
+}
+
+/* =========================================================
+   GLOBAL BACKGROUND
+   ========================================================= */
+
+.ls-background{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.ls-grid{
+    position:absolute;
+    inset:0;
+    opacity:.17;
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+    background-size:60px 60px;
+    mask-image:linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+    );
+}
+
+.ls-orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+}
+
+.ls-orb.one{
+    width:420px;
+    height:420px;
+    background:rgba(40,124,255,.10);
+    left:-180px;
+    top:15%;
+}
+
+.ls-orb.two{
+    width:360px;
+    height:360px;
+    background:rgba(118,87,255,.08);
+    right:-140px;
+    top:45%;
+}
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.ls-home{
+    width:min(1500px,94%);
+    margin:auto;
+    padding-bottom:100px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.ls-hero{
+    position:relative;
+    min-height:720px;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    border-radius:38px;
+    border:1px solid var(--ls-line);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(40,124,255,.11),
+            rgba(118,87,255,.055) 42%,
+            rgba(255,255,255,.018)
+        );
+    box-shadow:var(--ls-shadow);
+    margin-top:25px;
+}
+
+.ls-hero-content{
+    position:relative;
+    z-index:5;
+    width:58%;
+    padding:80px 70px;
+}
+
+.ls-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 14px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.035);
+    border-radius:999px;
+    color:#b8c3d8;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    backdrop-filter:blur(15px);
+}
+
+.ls-pill-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--ls-green);
+    box-shadow:0 0 15px var(--ls-green);
+}
+
+.ls-hero h1{
+    margin:28px 0 20px;
+    max-width:900px;
+    font-size:clamp(55px,7vw,105px);
+    line-height:.9;
+    letter-spacing:-5px;
+    font-weight:950;
+}
+
+.ls-gradient-text{
+    background:
+        linear-gradient(
+            100deg,
+            #ffffff 0%,
+            #72a9ff 38%,
+            #00d9ff 75%,
+            #8e6cff 100%
+        );
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.ls-hero-description{
+    max-width:650px;
+    color:var(--ls-muted);
+    font-size:17px;
+    line-height:1.9;
+}
+
+.ls-hero-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:13px;
+    margin-top:34px;
+}
+
+.ls-btn{
+    min-height:54px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:0 22px;
+    border-radius:16px;
+    text-decoration:none;
+    font-weight:800;
+    font-size:14px;
+    transition:
+        transform .25s,
+        box-shadow .25s,
+        background .25s;
+}
+
+.ls-btn-primary{
+    color:white;
+    background:
+        linear-gradient(
+            135deg,
+            #287cff,
+            #7657ff
+        );
+    box-shadow:
+        0 15px 45px rgba(40,124,255,.24);
+}
+
+.ls-btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 20px 55px rgba(40,124,255,.38);
+}
+
+.ls-btn-secondary{
+    color:#dbe4f4;
+    border:1px solid var(--ls-line);
+    background:rgba(255,255,255,.035);
+}
+
+.ls-btn-secondary:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.07);
+}
+
+/* =========================================================
+   HERO VISUAL
+   ========================================================= */
+
+.ls-visual{
+    position:absolute;
+    width:600px;
+    height:600px;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.ls-ring{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    border:1px solid rgba(72,145,255,.25);
+}
+
+.ls-ring.r1{
+    width:530px;
+    height:530px;
+    animation:lsRotate 24s linear infinite;
+}
+
+.ls-ring.r2{
+    width:390px;
+    height:390px;
+    border-color:rgba(0,217,255,.25);
+    animation:lsRotateReverse 17s linear infinite;
+}
+
+.ls-ring.r3{
+    width:250px;
+    height:250px;
+    border-color:rgba(118,87,255,.35);
+    animation:lsRotate 11s linear infinite;
+}
+
+.ls-core{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:180px;
+    height:180px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #7fb5ff,
+            #287cff 35%,
+            #7657ff 68%,
+            #090d18 100%
+        );
+    box-shadow:
+        0 0 80px rgba(40,124,255,.38),
+        0 0 150px rgba(118,87,255,.18);
+    animation:lsFloat 4s ease-in-out infinite;
+}
+
+.ls-core:before{
+    content:"LS";
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:48px;
+    font-weight:950;
+    letter-spacing:-3px;
+    color:#fff;
+    text-shadow:0 5px 25px rgba(0,0,0,.3);
+}
+
+.ls-satellite{
+    position:absolute;
+    width:15px;
+    height:15px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:
+        0 0 20px #287cff,
+        0 0 50px #287cff;
+}
+
+.ls-satellite.s1{
+    top:15%;
+    left:24%;
+}
+
+.ls-satellite.s2{
+    right:14%;
+    top:43%;
+    background:#00d9ff;
+    box-shadow:
+        0 0 20px #00d9ff,
+        0 0 50px #00d9ff;
+}
+
+.ls-satellite.s3{
+    bottom:17%;
+    left:34%;
+    background:#7657ff;
+    box-shadow:
+        0 0 20px #7657ff,
+        0 0 50px #7657ff;
+}
+
+@keyframes lsRotate{
+    from{transform:translate(-50%,-50%) rotate(0)}
+    to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+@keyframes lsRotateReverse{
+    from{transform:translate(-50%,-50%) rotate(360deg)}
+    to{transform:translate(-50%,-50%) rotate(0)}
+}
+
+@keyframes lsFloat{
+    0%,100%{
+        transform:translate(-50%,-50%) scale(1);
+    }
+    50%{
+        transform:translate(-50%,-54%) scale(1.04);
+    }
+}
+
+/* =========================================================
+   CATEGORY STRIP
+   ========================================================= */
+
+.ls-category-strip{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding:22px 2px 10px;
+    scrollbar-width:none;
+}
+
+.ls-category-strip::-webkit-scrollbar{
+    display:none;
+}
+
+.ls-category{
+    flex:0 0 auto;
+    padding:12px 18px;
+    border:1px solid var(--ls-line);
+    border-radius:999px;
+    background:rgba(255,255,255,.025);
+    color:#9da8bb;
+    text-decoration:none;
+    font-size:13px;
+    transition:.25s;
+}
+
+.ls-category:hover{
+    color:#fff;
+    border-color:rgba(40,124,255,.45);
+    background:rgba(40,124,255,.10);
+    transform:translateY(-2px);
+}
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.ls-section{
+    margin-top:90px;
+}
+
+.ls-section-heading{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.ls-section-heading h2{
+    margin:0;
+    font-size:clamp(30px,4vw,54px);
+    line-height:1;
+    letter-spacing:-2px;
+}
+
+.ls-section-heading p{
+    max-width:550px;
+    margin:8px 0 0;
+    color:var(--ls-muted);
+    line-height:1.7;
+    font-size:14px;
+}
+
+.ls-see-all{
+    flex:0 0 auto;
+    color:#8db9ff;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:800;
+}
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.ls-products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.ls-product{
+    overflow:hidden;
+    position:relative;
+    border:1px solid var(--ls-line);
+    border-radius:25px;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.015)
+        );
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        border-color .35s,
+        box-shadow .35s;
+}
+
+.ls-product:hover{
+    transform:translateY(-9px);
+    border-color:rgba(40,124,255,.35);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.4);
+}
+
+.ls-product-image{
+    position:relative;
+    aspect-ratio:1/1;
+    overflow:hidden;
+    background:#070a10;
+}
+
+.ls-product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .65s cubic-bezier(.2,.8,.2,1);
+}
+
+.ls-product:hover img{
+    transform:scale(1.08);
+}
+
+.ls-product-overlay{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            to top,
+            rgba(2,4,8,.72),
+            transparent 55%
+        );
+}
+
+.ls-product-badge{
+    position:absolute;
+    top:13px;
+    left:13px;
+    z-index:3;
+    padding:7px 10px;
+    border-radius:9px;
+    background:rgba(3,5,10,.75);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(15px);
+    color:white;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.7px;
+}
+
+.ls-product-body{
+    padding:19px;
+}
+
+.ls-product-category{
+    color:#7e8ba1;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+}
+
+.ls-product-title{
+    display:block;
+    margin:8px 0;
+    color:#fff;
+    text-decoration:none;
+    font-size:17px;
+    line-height:1.35;
+    font-weight:850;
+}
+
+.ls-product-description{
+    min-height:42px;
+    color:#79859a;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.ls-product-bottom{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:17px;
+}
+
+.ls-price{
+    font-size:20px;
+    font-weight:950;
+}
+
+.ls-old-price{
+    color:#626d80;
+    text-decoration:line-through;
+    font-size:11px;
+    margin-bottom:3px;
+}
+
+.ls-buy{
+    width:41px;
+    height:41px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:13px;
+    color:#fff;
+    text-decoration:none;
+    border:1px solid rgba(40,124,255,.3);
+    background:rgba(40,124,255,.12);
+    transition:.25s;
+}
+
+.ls-buy:hover{
+    background:#287cff;
+    transform:scale(1.08);
+}
+
+/* =========================================================
+   CATEGORY CARDS
+   ========================================================= */
+
+.ls-categories-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.ls-category-card{
+    min-height:240px;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+    padding:28px;
+    border:1px solid var(--ls-line);
+    border-radius:28px;
+    text-decoration:none;
+    color:#fff;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(40,124,255,.20),
+            transparent 40%
+        ),
+        var(--ls-panel);
+    transition:.35s;
+}
+
+.ls-category-card:nth-child(2){
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(118,87,255,.20),
+            transparent 40%
+        ),
+        var(--ls-panel);
+}
+
+.ls-category-card:nth-child(3){
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(0,217,255,.16),
+            transparent 40%
+        ),
+        var(--ls-panel);
+}
+
+.ls-category-card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(255,255,255,.16);
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
+}
+
+.ls-category-number{
+    position:absolute;
+    right:25px;
+    top:18px;
+    font-size:90px;
+    line-height:1;
+    font-weight:950;
+    color:rgba(255,255,255,.035);
+}
+
+.ls-category-icon{
+    position:relative;
+    z-index:2;
+    width:52px;
+    height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:17px;
+    margin-bottom:auto;
+    font-size:23px;
+    background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.ls-category-card h3{
+    position:relative;
+    z-index:2;
+    margin:0 0 6px;
+    font-size:23px;
+}
+
+.ls-category-card p{
+    position:relative;
+    z-index:2;
+    margin:0;
+    color:#8290a6;
+    font-size:13px;
+}
+
+/* =========================================================
+   FEATURED / EDITORIAL
+   ========================================================= */
+
+.ls-featured{
+    position:relative;
+    min-height:460px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border:1px solid var(--ls-line);
+    border-radius:34px;
+    background:
+        linear-gradient(
+            120deg,
+            rgba(40,124,255,.10),
+            rgba(118,87,255,.05),
+            rgba(255,255,255,.018)
+        );
+}
+
+.ls-featured-copy{
+    padding:60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.ls-featured-copy .small{
+    color:#6fa7ff;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-weight:900;
+}
+
+.ls-featured-copy h2{
+    margin:15px 0;
+    font-size:clamp(35px,4vw,62px);
+    letter-spacing:-3px;
+    line-height:.95;
+}
+
+.ls-featured-copy p{
+    max-width:520px;
+    color:#8793a8;
+    line-height:1.8;
+}
+
+.ls-featured-art{
+    min-height:460px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.ls-featured-art:before{
+    content:"";
+    width:330px;
+    height:330px;
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #73b3ff,
+            #287cff 35%,
+            #7657ff 68%,
+            #080b12 100%
+        );
+    box-shadow:
+        0 0 90px rgba(40,124,255,.28);
+    animation:lsFloat 5s ease-in-out infinite;
+}
+
+.ls-featured-art:after{
+    content:"LUCAS";
+    position:absolute;
+    font-size:clamp(65px,9vw,125px);
+    font-weight:950;
+    letter-spacing:-7px;
+    color:rgba(255,255,255,.045);
+}
+
+/* =========================================================
+   PHILOSOPHY
+   ========================================================= */
+
+.ls-philosophy{
+    padding:100px 0;
+    text-align:center;
+}
+
+.ls-philosophy-label{
+    color:#6fa7ff;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:11px;
+    font-weight:900;
+}
+
+.ls-philosophy h2{
+    max-width:1100px;
+    margin:25px auto 0;
+    font-size:clamp(38px,6vw,82px);
+    line-height:1;
+    letter-spacing:-4px;
+}
+
+.ls-philosophy h2 span{
+    color:#667389;
+}
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.ls-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--ls-line);
+    border-bottom:1px solid var(--ls-line);
+}
+
+.ls-stat{
+    padding:35px 25px;
+    text-align:center;
+    border-right:1px solid var(--ls-line);
+}
+
+.ls-stat:last-child{
+    border-right:0;
+}
+
+.ls-stat strong{
+    display:block;
+    font-size:38px;
+    font-weight:950;
+}
+
+.ls-stat span{
+    display:block;
+    margin-top:7px;
+    color:#707c90;
+    font-size:12px;
+}
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.ls-cta{
+    position:relative;
+    overflow:hidden;
+    margin-top:90px;
+    padding:75px 55px;
+    text-align:center;
+    border-radius:34px;
+    border:1px solid var(--ls-line);
+    background:
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(40,124,255,.20),
+            transparent 55%
+        ),
+        #080c14;
+}
+
+.ls-cta h2{
+    margin:0;
+    font-size:clamp(38px,5vw,70px);
+    letter-spacing:-3px;
+}
+
+.ls-cta p{
+    max-width:650px;
+    margin:18px auto 30px;
+    color:#7f8ba0;
+    line-height:1.8;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1150px){
+
+    .ls-products{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .ls-hero-content{
+        width:65%;
+    }
+
+    .ls-visual{
+        right:-170px;
+        opacity:.65;
+    }
+}
+
+@media(max-width:850px){
+
+    .ls-home{
+        width:92%;
+    }
+
+    .ls-hero{
+        min-height:650px;
+        border-radius:26px;
+    }
+
+    .ls-hero-content{
+        width:100%;
+        padding:45px 28px;
+        align-self:flex-start;
+        margin-top:30px;
+    }
+
+    .ls-hero h1{
+        font-size:55px;
+        letter-spacing:-3px;
+    }
+
+    .ls-hero-description{
+        font-size:14px;
+    }
+
+    .ls-visual{
+        width:450px;
+        height:450px;
+        right:-130px;
+        top:auto;
+        bottom:-120px;
+        transform:none;
+        opacity:.38;
+    }
+
+    .ls-ring.r1{
+        width:400px;
+        height:400px;
+    }
+
+    .ls-ring.r2{
+        width:300px;
+        height:300px;
+    }
+
+    .ls-ring.r3{
+        width:200px;
+        height:200px;
+    }
+
+    .ls-core{
+        width:140px;
+        height:140px;
+    }
+
+    .ls-products{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .ls-categories-grid{
+        grid-template-columns:1fr;
+    }
+
+    .ls-featured{
+        grid-template-columns:1fr;
+    }
+
+    .ls-featured-copy{
+        padding:40px 28px;
+    }
+
+    .ls-featured-art{
+        min-height:280px;
+    }
+
+    .ls-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .ls-stat:nth-child(2){
+        border-right:0;
+    }
+
+    .ls-stat:nth-child(-n+2){
+        border-bottom:1px solid var(--ls-line);
+    }
+}
+
+@media(max-width:500px){
+
+    .ls-home{
+        width:94%;
+    }
+
+    .ls-hero{
+        min-height:620px;
+    }
+
+    .ls-hero h1{
+        font-size:45px;
+        letter-spacing:-2.5px;
+    }
+
+    .ls-hero-buttons{
+        flex-direction:column;
+    }
+
+    .ls-btn{
+        width:100%;
+    }
+
+    .ls-section{
+        margin-top:65px;
+    }
+
+    .ls-section-heading{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .ls-products{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .ls-product{
+        border-radius:18px;
+    }
+
+    .ls-product-body{
+        padding:12px;
+    }
+
+    .ls-product-title{
+        font-size:14px;
+    }
+
+    .ls-product-description{
+        display:none;
+    }
+
+    .ls-price{
+        font-size:16px;
+    }
+
+    .ls-buy{
+        width:35px;
+        height:35px;
+    }
+
+    .ls-philosophy{
+        padding:70px 0;
+    }
+
+    .ls-philosophy h2{
+        font-size:40px;
+        letter-spacing:-2px;
+    }
+
+    .ls-cta{
+        padding:55px 22px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="ls-background">
+    <div class="ls-grid"></div>
+    <div class="ls-orb one"></div>
+    <div class="ls-orb two"></div>
+</div>
+
+<main class="ls-home">
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="ls-hero">
+
+        <div class="ls-hero-content">
+
+            <div class="ls-pill">
+                <span class="ls-pill-dot"></span>
+                LUCAS SHOP
+                <span>آنلاین</span>
+            </div>
+
+            <h1>
+                خرید و فروش بهتر.<br>
+                <span class="ls-gradient-text">
+                    انتخاب هوشمندانه‌تر.
+                </span>
+            </h1>
+
+            <p class="ls-hero-description">
+                به LUCAS SHOP خوش آمدید؛
+                یک فروشگاه مدرن برای پیدا کردن،
+                بررسی و خرید محصولات مورد علاقه‌تان
+                با تجربه‌ای سریع، ساده و حرفه‌ای.
+            </p>
+
+            <div class="ls-hero-buttons">
+
+                <a
+                    href="{{ url_for('explore') }}"
+                    class="ls-btn ls-btn-primary">
+                    مشاهده آگهی‌ها
+                    <span>→</span>
+                </a>
+
+                <a
+                    href="#featured"
+                    class="ls-btn ls-btn-secondary">
+                    درباره LUCAS SHOP
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="ls-visual">
+
+            <div class="ls-ring r1"></div>
+            <div class="ls-ring r2"></div>
+            <div class="ls-ring r3"></div>
+
+            <div class="ls-satellite s1"></div>
+            <div class="ls-satellite s2"></div>
+            <div class="ls-satellite s3"></div>
+
+            <div class="ls-core"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CATEGORIES
+         ===================================================== -->
+
+    <div class="ls-category-strip">
+
+        <a href="{{ url_for('explore') }}" class="ls-category">
+            همه آگهی‌ها
+        </a>
+
+        {% for category in categories %}
+        <a
+            href="{{ url_for('explore', category=category) }}"
+            class="ls-category">
+            {{ category }}
+        </a>
+        {% endfor %}
+
+    </div>
+
+
+    <!-- =====================================================
+         FEATURED
+         ===================================================== -->
+
+    {% if featured %}
+
+    <section id="featured" class="ls-section">
+
+        <div class="ls-section-heading">
+
+            <div>
+                <h2>آگهی‌های ویژه</h2>
+                <p>
+                    محصولاتی که ارزش دیده شدن دارند،
+                    با آگهی‌های ویژه LUCAS SHOP.
+                </p>
+            </div>
+
+            <a
+                href="{{ url_for('explore') }}"
+                class="ls-see-all">
+                مشاهده همه →
+            </a>
+
+        </div>
+
+        <div class="ls-products">
+
+            {% for product in featured[:4] %}
+
+            <article class="ls-product">
+
+                <div class="ls-product-image">
+
+                    {% if product['badge'] %}
+                    <div class="ls-product-badge">
+                        {{ product['badge'] }}
+                    </div>
+                    {% endif %}
+
+                    {% if product['image'] %}
+
+                    <img
+                        src="/uploads/{{ product['image'] }}"
+                        alt="{{ product['title'] }}"
+                        loading="lazy">
+
+                    {% else %}
+
+                    <div style="
+                        height:100%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:50px;
+                        background:
+                        radial-gradient(
+                            circle,
+                            rgba(40,124,255,.2),
+                            transparent 60%
+                        );
+                    ">
+                        ✦
+                    </div>
+
+                    {% endif %}
+
+                    <div class="ls-product-overlay"></div>
+
+                </div>
+
+                <div class="ls-product-body">
+
+                    <div class="ls-product-category">
+                        {{ product['category'] or 'LUCAS SHOP' }}
+                    </div>
+
+                    <a
+                        href="{{ url_for('product', product_id=product['id']) }}"
+                        class="ls-product-title">
+                        {{ product['title'] }}
+                    </a>
+
+                    <div class="ls-product-description">
+                        {{ product['description'] or 'محصول منتخب LUCAS SHOP' }}
+                    </div>
+
+                    <div class="ls-product-bottom">
+
+                        <div>
+
+                            {% if product['old_price'] %}
+                            <div class="ls-old-price">
+                                {{ product['old_price']|money }}
+                                {{ currency }}
+                            </div>
+                            {% endif %}
+
+                            <div class="ls-price">
+                                {{ product['price']|money }}
+                                <small style="
+                                    color:#758196;
+                                    font-size:10px;
+                                ">
+                                    {{ currency }}
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <a
+                            href="{{ url_for('product', product_id=product['id']) }}"
+                            class="ls-buy">
+                            →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         CATEGORY CARDS
+         ===================================================== -->
+
+    <section class="ls-section">
+
+        <div class="ls-section-heading">
+
+            <div>
+                <h2>دسته‌بندی آگهی‌ها</h2>
+                <p>
+                    سریع‌تر به چیزی که می‌خواهید برسید.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="ls-categories-grid">
+
+            {% for category in categories[:3] %}
+
+            <a
+                href="{{ url_for('explore', category=category) }}"
+                class="ls-category-card">
+
+                <div class="ls-category-number">
+                    0{{ loop.index }}
+                </div>
+
+                <div class="ls-category-icon">
+                    {% if loop.index == 1 %}
+                        ◈
+                    {% elif loop.index == 2 %}
+                        ◆
+                    {% else %}
+                        ✦
+                    {% endif %}
+                </div>
+
+                <h3>{{ category }}</h3>
+
+                <p>
+                    مشاهده آگهی‌ها این دسته →
+                </p>
+
+            </a>
+
+            {% else %}
+
+            <a
+                href="{{ url_for('explore') }}"
+                class="ls-category-card">
+
+                <div class="ls-category-icon">✦</div>
+
+                <h3>محصولات LUCAS SHOP</h3>
+
+                <p>
+                    مشاهده تمام محصولات →
+                </p>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LATEST PRODUCTS
+         ===================================================== -->
+
+    {% if latest %}
+
+    <section class="ls-section">
+
+        <div class="ls-section-heading">
+
+            <div>
+                <h2>جدیدترین آگهی‌ها</h2>
+
+                <p>
+                    تازه‌ترین محصولات اضافه‌شده به LUCAS SHOP.
+                </p>
+            </div>
+
+            <a
+                href="{{ url_for('explore') }}"
+                class="ls-see-all">
+                همه آگهی‌ها →
+            </a>
+
+        </div>
+
+        <div class="ls-products">
+
+            {% for product in latest[:8] %}
+
+            <article class="ls-product">
+
+                <div class="ls-product-image">
+
+                    {% if product['badge'] %}
+                    <div class="ls-product-badge">
+                        {{ product['badge'] }}
+                    </div>
+                    {% endif %}
+
+                    {% if product['image'] %}
+
+                    <img
+                        src="/uploads/{{ product['image'] }}"
+                        alt="{{ product['title'] }}"
+                        loading="lazy">
+
+                    {% else %}
+
+                    <div style="
+                        height:100%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:50px;
+                    ">
+                        ✦
+                    </div>
+
+                    {% endif %}
+
+                    <div class="ls-product-overlay"></div>
+
+                </div>
+
+                <div class="ls-product-body">
+
+                    <div class="ls-product-category">
+                        {{ product['category'] or 'LUCAS SHOP' }}
+                    </div>
+
+                    <a
+                        href="{{ url_for('product', product_id=product['id']) }}"
+                        class="ls-product-title">
+                        {{ product['title'] }}
+                    </a>
+
+                    <div class="ls-product-description">
+                        {{ product['description'] or 'محصول جدید LUCAS SHOP' }}
+                    </div>
+
+                    <div class="ls-product-bottom">
+
+                        <div>
+
+                            {% if product['old_price'] %}
+                            <div class="ls-old-price">
+                                {{ product['old_price']|money }}
+                                {{ currency }}
+                            </div>
+                            {% endif %}
+
+                            <div class="ls-price">
+                                {{ product['price']|money }}
+                                <small style="
+                                    color:#758196;
+                                    font-size:10px;
+                                ">
+                                    {{ currency }}
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <a
+                            href="{{ url_for('product', product_id=product['id']) }}"
+                            class="ls-buy">
+                            →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         EDITORIAL FEATURE
+         ===================================================== -->
+
+    <section class="ls-section">
+
+        <div class="ls-featured">
+
+            <div class="ls-featured-copy">
+
+                <span class="small">
+                    LUCAS SHOP EXPERIENCE
+                </span>
+
+                <h2>
+                    فقط یک فروشگاه نیست.
+                </h2>
+
+                <p>
+                    ما LUCAS SHOP را طوری طراحی می‌کنیم
+                    که پیدا کردن محصول، بررسی جزئیات و
+                    انتخاب نهایی تا جای ممکن ساده و لذت‌بخش باشد.
+                </p>
+
+                <div>
+                    <a
+                        href="{{ url_for('explore') }}"
+                        class="ls-btn ls-btn-primary">
+                        شروع فعالیت →
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="ls-featured-art"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PHILOSOPHY
+         ===================================================== -->
+
+    <section class="ls-philosophy">
+
+        <div class="ls-philosophy-label">
+            چرا LUCAS SHOP؟
+        </div>
+
+        <h2>
+            آگهی خوب،
+            <span>تجربه خوب می‌خواهد.</span>
+        </h2>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATS
+         ===================================================== -->
+
+    <section class="ls-stats">
+
+        <div class="ls-stat">
+            <strong>24/7</strong>
+            <span>دسترسی آنلاین</span>
+        </div>
+
+        <div class="ls-stat">
+            <strong>100%</strong>
+            <span>تجربه دیجیتال</span>
+        </div>
+
+        <div class="ls-stat">
+            <strong>FAST</strong>
+            <span>جست‌وجوی سریع</span>
+        </div>
+
+        <div class="ls-stat">
+            <strong>LS</strong>
+            <span>LUCAS SHOP</span>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FINAL CTA
+         ===================================================== -->
+
+    <section class="ls-cta">
+
+        <h2>
+            آماده‌ای آگهی خودت را ثبت کنی؟
+        </h2>
+
+        <p>
+            وارد مجموعه LUCAS SHOP شو و محصولات موجود
+            را ببین.
+        </p>
+
+        <a
+            href="{{ url_for('explore') }}"
+            class="ls-btn ls-btn-primary">
+            ثبت آگهی →
+        </a>
+
+    </section>
+
+</main>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+/* =========================================================
+   LUCAS SHOP INTERACTIONS
+   ========================================================= */
+
+(function(){
+
+    const products =
+        document.querySelectorAll('.ls-product');
+
+    products.forEach((card,index)=>{
+
+        card.style.opacity='0';
+        card.style.transform='translateY(25px)';
+
+        const observer =
+            new IntersectionObserver(
+                entries=>{
+                    entries.forEach(entry=>{
+
+                        if(!entry.isIntersecting)
+                            return;
+
+                        setTimeout(()=>{
+
+                            card.style.transition=
+                                'opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1)';
+
+                            card.style.opacity='1';
+                            card.style.transform='translateY(0)';
+
+                        },index*55);
+
+                        observer.unobserve(card);
+
+                    });
+                },
+                {threshold:.08}
+            );
+
+        observer.observe(card);
+
+        card.addEventListener('mousemove',(e)=>{
+
+            if(window.innerWidth < 850)
+                return;
+
+            const rect=card.getBoundingClientRect();
+
+            const x=
+                (e.clientX-rect.left)/rect.width-.5;
+
+            const y=
+                (e.clientY-rect.top)/rect.height-.5;
+
+            card.style.transform=
+                `translateY(-9px)
+                 rotateX(${y*-2}deg)
+                 rotateY(${x*2}deg)`;
+        });
+
+        card.addEventListener('mouseleave',()=>{
+
+            card.style.transform=
+                'translateY(0) rotateX(0) rotateY(0)';
+
+        });
+
+    });
+
+
+    /* BUTTON RIPPLE */
+
+    document
+        .querySelectorAll('.ls-btn,.ls-buy')
+        .forEach(button=>{
+
+            button.addEventListener('click',function(e){
+
+                const ripple=
+                    document.createElement('span');
+
+                ripple.style.position='absolute';
+                ripple.style.width='10px';
+                ripple.style.height='10px';
+                ripple.style.borderRadius='50%';
+                ripple.style.background='rgba(255,255,255,.3)';
+                ripple.style.pointerEvents='none';
+
+                this.style.position='relative';
+                this.style.overflow='hidden';
+
+                const rect=
+                    this.getBoundingClientRect();
+
+                ripple.style.left=
+                    (e.clientX-rect.left)+'px';
+
+                ripple.style.top=
+                    (e.clientY-rect.top)+'px';
+
+                ripple.animate(
+                    [
+                        {
+                            transform:'scale(1)',
+                            opacity:1
+                        },
+                        {
+                            transform:'scale(35)',
+                            opacity:0
+                        }
+                    ],
+                    {
+                        duration:550,
+                        easing:'ease-out'
+                    }
+                );
+
+                this.appendChild(ripple);
+
+                setTimeout(
+                    ()=>ripple.remove(),
+                    600
+                );
+
+            });
+
+        });
+
+
+    /* HERO PARALLAX */
+
+    const visual=
+        document.querySelector('.ls-visual');
+
+    if(visual){
+
+        window.addEventListener(
+            'mousemove',
+            e=>{
+
+                if(window.innerWidth < 850)
+                    return;
+
+                const x=
+                    (e.clientX/window.innerWidth-.5);
+
+                const y=
+                    (e.clientY/window.innerHeight-.5);
+
+                visual.style.transform=
+                    `translateY(-50%)
+                     translate(${x*18}px,${y*18}px)`;
+
+            },
+            {passive:true}
+        );
+
+    }
+
+
+    /* SCROLL REVEAL */
+
+    const revealItems=
+        document.querySelectorAll(
+            '.ls-section,.ls-philosophy,.ls-stats,.ls-cta'
+        );
+
+    revealItems.forEach(item=>{
+
+        item.style.opacity='0';
+        item.style.transform='translateY(30px)';
+
+        const observer=
+            new IntersectionObserver(
+                entries=>{
+
+                    entries.forEach(entry=>{
+
+                        if(!entry.isIntersecting)
+                            return;
+
+                        item.style.transition=
+                            'opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1)';
+
+                        item.style.opacity='1';
+                        item.style.transform='translateY(0)';
+
+                        observer.unobserve(item);
+
+                    });
+
+                },
+                {threshold:.08}
+            );
+
+        observer.observe(item);
+
+    });
+
+})();
+</script>
+
+{% endblock %}
