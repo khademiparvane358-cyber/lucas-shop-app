@@ -22,7 +22,9 @@ _telegram_init_conn.close()
 UPLOAD_DIR = "/tmp/lucas_uploads"
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='uploads', static_url_path='/uploads')
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
+
 
 from flask import send_from_directory
 
@@ -3763,8 +3765,9 @@ if __name__ == "__main__":
     print("=" * 60)
     print()
 
+    port = int(os.environ.get("PORT", "3000"))
     app.run(
         host="0.0.0.0",
-        port=int(os.environ.get("PORT", 8080)),
+        port=port,
         debug=False
     )
